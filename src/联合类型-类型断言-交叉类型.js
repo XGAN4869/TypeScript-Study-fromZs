@@ -28,6 +28,8 @@ function func2(a) {
     console.log(a.length); //强制转换类型
 }
 func2('123'); //OK
-func2(1) // 不能滥用会导致类型错误
-(window).abc = '123';
+func2(1); // 不能滥用会导致类型错误
+// 这里以（开头会触发 ts 语法歧义,上面那行要加 ; semicolon
+// TODO func2('123')(window as any).abc = '123'
+// (window as any).abc = '123'
 //# sourceMappingURL=%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B-%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80-%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B.js.map

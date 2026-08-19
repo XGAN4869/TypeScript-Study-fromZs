@@ -41,6 +41,8 @@ function func2(a:number | string):void {
 }
 
 func2('123') //OK
-func2(1) // 不能滥用会导致类型错误
+func2(1); // 不能滥用会导致类型错误
 
- (window as any).abc = '123'
+// 这里以（开头会触发 ts 语法歧义,上面那行要加 ; semicolon
+// TODO func2('123')(window as any).abc = '123'
+// (window as any).abc = '123'

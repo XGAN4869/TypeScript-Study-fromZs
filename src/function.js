@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function func1(user) {
     return user;
 }
+//123
 console.log(func1({ name: 'Zora', age: 23 }));
 //函数重载reload -- 根据不同的参数决定不同的功能
 let user = [1, 2, 3];
