@@ -6,7 +6,7 @@ interface User {
 function func1(user: User):User {
     return user
 }
-
+//123
 console.log(func1({name:'Zora',age:23}))
 
 //函数重载reload -- 根据不同的参数决定不同的功能
