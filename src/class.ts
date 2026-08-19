@@ -6,7 +6,7 @@ interface Options {
     el:string | HTMLElement
 }
 
-// VueClass接口：用来约束 class Vue 这个类必须具备哪些属性、哪些方法
+//TODO VueClass接口：用来约束 class Vue 这个类必须具备哪些属性、哪些方法
 interface VueClass {
     options:Options;
     init():void;
@@ -18,7 +18,7 @@ interface Vnode {
     text?:string //输入的文字
     children?:Vnode[] //子集？这里有递归的意味
 }
-//虚拟 DOM 简单版
+//虚拟 DOM 简单版 -- Vue 的父类
 class Dom {
 
     //super 原理，可以子类 super('Zora')
@@ -58,7 +58,7 @@ class Dom {
 class Vue extends Dom implements VueClass{
     options:Options;
     constructor(options:Options) {
-        //FIXME ? 好像如果写了 extends 就要写 super？
+        //FIXME 如果写了 extends 就要写 super
         super() //父类的 prototype.constructor.call()
         this.options = options;
     }
@@ -68,6 +68,7 @@ class Vue extends Dom implements VueClass{
     //     this.xxx // this 只能指向 static, 调用不了 init
     //     return 666
     // }
+
     init():void {
         //虚拟 dom 就是通过 js 去渲染真实 Dom
         let data:Vnode = {
@@ -80,6 +81,15 @@ class Vue extends Dom implements VueClass{
                 {
                     tag:'section',
                     text:'我是子节点2'
+                },
+                {
+                    tag:'section',
+                    children:[
+                        {
+                            tag:'section',
+                            text:'我是zizi节点3'
+                        },
+                    ]
                 }
              ]
         }
