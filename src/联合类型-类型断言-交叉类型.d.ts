@@ -1,0 +1,2 @@
+export {};
+//# sourceMappingURL=%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B-%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80-%E4%BA%A4%E5%8F%89%E7%B1%BB%E5%9E%8B.d.ts.map
