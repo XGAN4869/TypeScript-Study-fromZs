@@ -1,7 +1,35 @@
 /**
- * Options接口：约束new Vue({ ... })传入的配置对象有哪些字段、什么类型
- * el: '#app' | el: document.getElementById('app')!
+ * 源码版
+ * instance.update()
+ *     ↓
+ * effect.run()
+ *     ↓
+ * componentUpdateFn()
+ *     ↓
+ * renderComponentRoot()
+ *     ↓
+ * patch(null, VNode)
+ *     ↓
+ * 真实 DOM
 */
+/**
+ * 简易版：模拟的是“首次挂载”的核心部分
+ * vm.init()
+ *     ↓
+ * this.render(data)
+ *     ↓
+ * createElement()
+ *     ↓
+ * 递归 render()
+ *     ↓
+ * setText()
+ *     ↓
+ * appendChild()
+ *     ↓
+ * 返回真实 DOM
+*/
+
+
 interface Options {
     el:string | HTMLElement
 }
@@ -18,7 +46,7 @@ interface Vnode {
     text?:string //输入的文字
     children?:Vnode[] //子集？这里有递归的意味
 }
-//虚拟 DOM 简单版 -- Vue 的父类
+//TODO 虚拟 DOM 简单版 -- Vue 的父类(将挂载方法放 Dom 中是因为这些方法是"浏览器 DOM"，不是 Vue 配置本身)
 class Dom {
 
     //super 原理，可以子类 super('Zora')
@@ -34,12 +62,16 @@ class Dom {
     setText(el:HTMLElement,text:string | null){
         el.textContent = text
     }
-    //渲染函数：为了让子类能够调取父类的 render 方法
+    /**
+     * 简化版 patch / mountElement递归把 VNode 变成真实 DOM
+    */
     render(data:Vnode){
+        //创建真实 DOM
         let root = this.createElement(data.tag)
         if(data.children && Array.isArray(data.children)){
             data.children.forEach(item=>{
                 //递归不停地渲染有child 的节点
+                //最接近 patch(null, subTree)它直接把 VNode 转成 DOM
                 let child = this.render(item)
                 root.appendChild(child)
             })
@@ -54,6 +86,7 @@ class Dom {
     }
 }
 // class Vue implements VueCls
+//Dom：负责“怎么操作真实 DOM” | Vue：负责“什么时候调用这些操作”
 // TODO implements：用于约束 class 类的 || 虽然我记得在 java 中是实现
 class Vue extends Dom implements VueClass{
     options:Options;
@@ -71,6 +104,7 @@ class Vue extends Dom implements VueClass{
 
     init():void {
         //虚拟 dom 就是通过 js 去渲染真实 Dom
+        //真实的 Vnode 是 render 执行后出来的
         let data:Vnode = {
             tag:'div',
             children:[
@@ -94,12 +128,14 @@ class Vue extends Dom implements VueClass{
              ]
         }
         //由于联合类型？所以要判断一下，不然会滥用
+        //获取挂载容器类似 mount container
         let app = typeof this.options.el === 'string' ? document.querySelector(this.options.el) : (this.options.el)
         //把真实的 Dom 节点塞进去即可
         // 如果选择器没有找到元素，提前给出明确错误
         if (!app) {
             throw new Error(`没有找到挂载元素：${this.options.el}`)
         }
+        // 递归创建真实 DOM
         app.appendChild(this.render(data))
     }
 }
