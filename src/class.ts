@@ -55,7 +55,7 @@ class Dom {
     // }
 
     //创建节点方法
-    createElement(el:string){
+    private createElement(el:string){
         return document.createElement(el)
     }
     //填充文本方法
@@ -66,8 +66,8 @@ class Dom {
      * 简化版 patch / mountElement递归把 VNode 变成真实 DOM
     */
     render(data:Vnode){
-        //创建真实 DOM
-        let root = this.createElement(data.tag)
+        //root: 把虚拟节点data（VNode）的tag，在内存中创建出真实 DOM 元素，作为这一棵子 DOM 树的根节点
+        let root = this.createElement(data.tag) //【A】内存里新建的DOM节点，还不在页面
         if(data.children && Array.isArray(data.children)){
             data.children.forEach(item=>{
                 //递归不停地渲染有child 的节点
@@ -82,7 +82,7 @@ class Dom {
             }
         }
 
-        return root //FIXME 返回之后好像有递归的操作？
+        return root // 返回这一整颗拼好的DOM子树（依旧在内存）
     }
 }
 // class Vue implements VueCls
@@ -128,7 +128,7 @@ class Vue extends Dom implements VueClass{
              ]
         }
         //由于联合类型？所以要判断一下，不然会滥用
-        //获取挂载容器类似 mount container
+        //拿到根节点
         let app = typeof this.options.el === 'string' ? document.querySelector(this.options.el) : (this.options.el)
         //把真实的 Dom 节点塞进去即可
         // 如果选择器没有找到元素，提前给出明确错误
