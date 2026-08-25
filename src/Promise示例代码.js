@@ -7,6 +7,8 @@ const p2 = p1.then((value) => {
     /**
      * P3：此时，又来了一个 Promise, 状态是 pending
      * P3.then(resolveP2,rejectP2);
+     * so, resolveP3 并没有被放入 then()中作为参数执行
+     * P3 的状态 → 驱动 P2 的状态
      */
     const p3 = new Promise((resolve) => {
         setTimeout(() => {
