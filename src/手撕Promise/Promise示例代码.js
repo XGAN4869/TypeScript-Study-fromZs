@@ -18,19 +18,7 @@ const p2 = p1.then((value) => {
     return p3;
 })
 
+//resolveP2执行后，执行微任务队列，执行 then
 p2.then((result) => {
     console.log(result); // 1 秒后打印 20
-}).catch((err) => {
-    console.log(err);
 })
-
-/**
- * P1:          state:fullfilled
- *              result:10
- *
- * P2:          state:pending || 所以存了 callbacks
- *              result:10
- *
- * P3:          state:pending || 所以存了 callbacks
- *              result:10
- */

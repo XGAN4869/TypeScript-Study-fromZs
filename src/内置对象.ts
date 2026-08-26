@@ -9,6 +9,7 @@
 //4.案例
 
 
+
 let num:Number = new Number(1)
 let date:Date = new Date()
 let reg:RegExp = new RegExp(/\w/)

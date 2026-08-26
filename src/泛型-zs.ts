@@ -30,7 +30,7 @@ function add<T = number,K = number>(a:T, b:K):Array<T | K>{
 add(1,2)
 add(false,2)
 
-
+//TODO Promise<T> resolve 出来的值是 T → then 成功回调的第一个参数就是 T
 //手写 axios:
 const axios = {
     get<T>(url:string):Promise<T> {

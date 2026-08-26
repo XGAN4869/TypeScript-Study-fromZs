@@ -36,6 +36,8 @@ class Promise {
         onRejected = (typeof onRejected === 'function') ? onRejected : r => throw r
 
         //TODO then 永远返回一个 new 全新的 promise 实例，用来链式调用，内层的 this 指向这一层，是老的 promise，因为内层都是箭头函数
+        //P2 resolveP2 resolveP2
+        //p4
         return new Promise((resolve, reject) => {
             const handle = (callback) => { //callback = onFullFilled / onRejected
                 //✅2. 将回调函数放入微任务队列，不会立即执行，会等当前主线程同步代码全部跑完之后，才执行
@@ -44,8 +46,11 @@ class Promise {
                         //✅TODO 执行值穿透函数，把旧promise 的 result 给了 新 promise的 value 参数，也就是 then 后面的 (value)=>{...}
                         const result = callback(this.result)
                         if (result instanceof Promise) {
+                            //P3
                             result.then(resolve, reject)
-                        } else {
+                            //P4: 但是 then 完了之后没有return 保存
+                        }
+                        else {
                             resolve(result)
                         }
                     } catch (err) {

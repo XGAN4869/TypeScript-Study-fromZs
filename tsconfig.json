@@ -1,14 +1,16 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
     // File Layout
     // "rootDir": "./src",
     // "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
+    "module": "ESNext", //生成代码模板标准，CommonJS,ES6
+    "target": "esnext", //ts编译语言版本
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -16,6 +18,12 @@
     // and npm install -D @types/node
 
     // Other Outputs
+    /**
+     * TS 源码（人类看）→ tsc 编译 → JS（机器运行）
+      编译后的 JS 和原来 ts 行数完全对不上。
+      **sourceMap 就是一张 “翻译对照表”：js 哪一行对应 ts 哪一行。**
+    */
+
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
