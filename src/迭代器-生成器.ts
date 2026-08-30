@@ -15,6 +15,7 @@ function* gen(){
     yield 'Raechel'
     yield 'Ruby'
     yield 'Kiran'
+
 }
 
 const female = gen()
