@@ -1,7 +1,10 @@
 /**
+ * 低阶写法好像是
  * TODO extends：运行时继承，有父类，派生类构造函数需要先调用 super()。
  *      implements：只做类型检查，不是真继承，不需要也不能调用 super()。
  *      extends 是“真正继承实现”，implements 只是“让编译器检查外形”。
+ *
+ *
 */
 
 // Disposable Mixin
@@ -47,6 +50,10 @@ class SmartObject implements Disposable, Activatable {
     declare activate: () => void;
     declare deactivate: () => void;
 }
+/**
+ * interface 只能做类型，不能提供运行时代码。
+ * `applyMixins` 需要拿到一个真实存在的构造函数，读取它的 prototype 复制方法，interface 做不到这点。
+*/
 applyMixins(SmartObject, [Disposable, Activatable]);
 
 let smartObj = new SmartObject();
