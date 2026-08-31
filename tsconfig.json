@@ -1,7 +1,24 @@
+
+/**
+ * TypeScript 按 ES Module 编译
+            ↓
+    ts-node / Node 按 CommonJS 加载
+            ↓
+    运行行为异常
+*/
+
 {
+  "ts-node": {
+    "compilerOptions": {
+      //Node/ts-node 当前按 CommonJS 方式运行。两边模块规则不一致：
+      "module": "CommonJS",
+    }
+  },
+
+  //给 Vite、Webpack、Rollup 这类前端打包器使用的：
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler", //按照打包器规则查找模块
     "esModuleInterop": true,
     // File Layout
     // "rootDir": "./src",
@@ -9,7 +26,7 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESNext", //生成代码模板标准，CommonJS,ES6
+    "module": "ESNext", //生成代码模板标准，CommonJS,ES6 ESNext 保留 import/export
     "target": "esnext", //ts编译语言版本
     "types": [],
     // For nodejs:
@@ -43,10 +60,10 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true, //尽量不改写模块语法
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
+    "moduleDetection": "force",  //把每个 .ts 文件都视为模块
     "skipLibCheck": true,
   }
 }
